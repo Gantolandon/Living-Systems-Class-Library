@@ -33,12 +33,8 @@ namespace Living_Systems_Class_Library
             {
                 return false;
             }
-            bool result = Execute();
-            if (result)
-            {
-                outputPile.AddBulk(outputs);
-            }
-            return result;
+            outputPile.AddBulk(outputs);
+            return true;
         }
 
         public ISet<string> GetComponents()

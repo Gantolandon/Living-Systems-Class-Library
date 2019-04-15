@@ -9,9 +9,6 @@ namespace Living_Systems_Class_Library
 {
     interface IProcess
     {
-        IDictionary<string, double> Inputs { get; set; }
-        IDictionary<string, double> Outputs { get; set; }
-
         bool Execute();
         bool Execute(MatterEnergyPile input, MatterEnergyPile output);
         ISet<string> GetComponents();

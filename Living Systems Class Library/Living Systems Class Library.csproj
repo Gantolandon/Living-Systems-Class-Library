@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Components\ProcessReproducerDecorator.cs" />
     <Compile Include="Helpers\MatterEnergyPile.cs" />
     <Compile Include="IProcess.cs" />
     <Compile Include="LivingSystem.cs" />
@@ -58,8 +59,6 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Components\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
