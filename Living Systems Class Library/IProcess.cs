@@ -7,10 +7,14 @@ using System.Threading.Tasks;
 
 namespace Living_Systems_Class_Library
 {
+    interface IProcessExecuteArgs
+    {
+
+    }
+
     interface IProcess
     {
-        bool Execute();
-        bool Execute(MatterEnergyPile input, MatterEnergyPile output);
+        bool Execute(IProcessExecuteArgs args);
         ISet<string> GetComponents();
     }
 }

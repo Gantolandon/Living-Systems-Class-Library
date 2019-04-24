@@ -7,6 +7,12 @@ using System.Threading.Tasks;
 
 namespace Living_Systems_Class_Library
 {
+    public class BasicProcessExecuteArgs : IProcessExecuteArgs
+    {
+        public MatterEnergyPile inputPile;
+        public MatterEnergyPile outputPile;
+    }
+
     class Process : IProcess
     {
         IDictionary<string, double> inputs;
@@ -21,19 +27,18 @@ namespace Living_Systems_Class_Library
         {
             this.system = system;
         }
-
-        public bool Execute()
+        public bool Execute(IProcessExecuteArgs args)
         {
-            return true;
-        }
-
-        public bool Execute(MatterEnergyPile inputPile, MatterEnergyPile outputPile)
-        {
-            if (!inputPile.RemoveBulk(inputs))
+            BasicProcessExecuteArgs basicArgs = args as BasicProcessExecuteArgs;
+            if ((basicArgs.inputPile == null && Inputs.Count > 0) || !basicArgs.inputPile.RemoveBulk(inputs))
             {
                 return false;
             }
-            outputPile.AddBulk(outputs);
+            if (basicArgs.outputPile == null && Outputs.Count == 0)
+            {
+                return false;
+            }
+            basicArgs.outputPile.AddBulk(outputs);
             return true;
         }
 
