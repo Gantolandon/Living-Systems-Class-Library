@@ -13,38 +13,41 @@ namespace Living_Systems_Class_Library
         public MatterEnergyPile outputPile;
     }
 
+    public class BasicProcessTemplate : IProcessTemplate
+    {
+        public IDictionary<string, double> inputs;
+        public IDictionary<string, double> outputs;
+    }
+
     class Process : IProcess
     {
-        IDictionary<string, double> inputs;
-        IDictionary<string, double> outputs;
-
         LivingSystem system;
+        public IProcessExecuteArgs ExecuteArgs { get; set; }
+        public IProcessTemplate ProcessTemplate { get; set; } 
 
-        public IDictionary<string, double> Inputs { get => inputs; set => inputs = new Dictionary<string, double>(value); }
-        public IDictionary<string, double> Outputs { get => outputs; set => outputs = new Dictionary<string, double>(value); }
-   
         public Process(LivingSystem system)
         {
             this.system = system;
         }
-        public bool Execute(IProcessExecuteArgs args)
+        public bool Execute()
         {
-            BasicProcessExecuteArgs basicArgs = args as BasicProcessExecuteArgs;
-            if ((basicArgs.inputPile == null && Inputs.Count > 0) || !basicArgs.inputPile.RemoveBulk(inputs))
+            BasicProcessExecuteArgs basicArgs = ExecuteArgs as BasicProcessExecuteArgs;
+            BasicProcessTemplate processTemplate = ProcessTemplate as BasicProcessTemplate;
+            if ((basicArgs.inputPile == null && processTemplate.inputs.Count > 0) || !basicArgs.inputPile.RemoveBulk(processTemplate.inputs))
             {
                 return false;
             }
-            if (basicArgs.outputPile == null && Outputs.Count == 0)
+            if (basicArgs.outputPile == null && processTemplate.outputs.Count == 0)
             {
                 return false;
             }
-            basicArgs.outputPile.AddBulk(outputs);
+            basicArgs.outputPile.AddBulk(processTemplate.outputs);
             return true;
         }
 
-        public ISet<string> GetComponents()
+        public ISet<ProcessType> GetComponents()
         {
-            return new SortedSet<string>();
+            return new SortedSet<ProcessType>();
         }
     }
 }

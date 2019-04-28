@@ -7,14 +7,21 @@ using System.Threading.Tasks;
 
 namespace Living_Systems_Class_Library
 {
-    interface IProcessExecuteArgs
+    public interface IProcessExecuteArgs
     {
 
     }
 
-    interface IProcess
+    public interface IProcessTemplate
     {
-        bool Execute(IProcessExecuteArgs args);
-        ISet<string> GetComponents();
+
+    }
+
+    public interface IProcess
+    {
+        bool Execute();
+        IProcessExecuteArgs ExecuteArgs { get; set; }
+        IProcessTemplate ProcessTemplate { get; set; }
+        ISet<ProcessType> GetComponents();
     }
 }
