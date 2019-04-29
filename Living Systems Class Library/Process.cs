@@ -15,6 +15,7 @@ namespace Living_Systems_Class_Library
 
     public class BasicProcessTemplate : IProcessTemplate
     {
+        public ProcessType type;
         public IDictionary<string, double> inputs;
         public IDictionary<string, double> outputs;
     }

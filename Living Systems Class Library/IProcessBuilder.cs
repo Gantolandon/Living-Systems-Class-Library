@@ -14,6 +14,6 @@ namespace Living_Systems_Class_Library
     public interface IProcessBuilder
     {
 
-        IProcess Build(LivingSystem system, ProcessType type, IProcessTemplate template);
+        IProcess Build(LivingSystem system, IProcessTemplate template);
     }
 }

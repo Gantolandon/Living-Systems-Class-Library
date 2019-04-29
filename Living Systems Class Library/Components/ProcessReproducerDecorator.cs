@@ -7,9 +7,16 @@ using System.Threading.Tasks;
 
 namespace Living_Systems_Class_Library.Components
 {
-    public class ProcessReproducerExecuteArgs : BasicProcessExecuteArgs
+    //TODO: make templates compliant with Decorator pattern too
+    
+    public class ReproducerProcessExecuteArgs : BasicProcessExecuteArgs
     {
         public LivingSystem system = null;
+    }
+
+    public class ReproducerProcessTemplate : BasicProcessTemplate
+    {
+        public Dictionary<string, IProcessTemplate> processesToAdd;
     }
 
     class ProcessReproducerDecorator: IProcess
@@ -25,11 +32,19 @@ namespace Living_Systems_Class_Library.Components
 
         public bool Execute()
         {
-            ProcessReproducerExecuteArgs specificArgs = ExecuteArgs as ProcessReproducerExecuteArgs;
+            ReproducerProcessExecuteArgs specificArgs = ExecuteArgs as ReproducerProcessExecuteArgs;
             bool result = _inner.Execute();
             if (result)
             {
+                ReproducerProcessTemplate reproducerTemplate = ProcessTemplate as ReproducerProcessTemplate;
                 specificArgs.system = new LivingSystem();
+                if (reproducerTemplate != null && reproducerTemplate.processesToAdd != null)
+                {
+                    foreach (KeyValuePair<string, IProcessTemplate> process in reproducerTemplate.processesToAdd)
+                    {
+                        specificArgs.system.AddProcess(process.Key, process.Value);
+                    }
+                }
             }
             return result;
         }

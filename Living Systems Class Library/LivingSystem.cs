@@ -15,10 +15,10 @@ namespace Living_Systems_Class_Library
             this.processes = new Dictionary<string, IProcess>();
         }
 
-        public void AddProcess(string name, ProcessType type, IProcessTemplate template)
+        public void AddProcess(string name, IProcessTemplate template)
         {
             IProcessBuilder builder = ProcessBuilder.GetProcessBuilder();
-            IProcess process = builder.Build(this, type, template);
+            IProcess process = builder.Build(this, template);
             this.processes.Add(name, process);
         }
 
