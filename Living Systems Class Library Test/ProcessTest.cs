@@ -22,13 +22,13 @@ namespace Living_Systems_Class_Library_Test
             template.outputs = new Dictionary<string, double>();
             template.outputs.Add("matterEnergy", 0.5d);
             template.type = ProcessType.REPRODUCER;
-            ReproducerProcessExecuteArgs executeArgs = new ReproducerProcessExecuteArgs();
-            executeArgs.inputPile = input;
-            executeArgs.outputPile = output;
+            dynamic executeArgs = new BasicProcessExecuteArgs();
+            executeArgs.InputPile = input;
+            executeArgs.OutputPile = output;
             system.AddProcess("reproducerProcess", template);
             Assert.IsTrue(system.SetExecuteArgs("reproducerProcess", executeArgs));
             Assert.IsTrue(system.ExecuteAllProcesses());
-            Assert.IsNotNull(executeArgs.system);
+            Assert.IsNotNull(executeArgs.System);
             Assert.IsTrue(input["matterEnergy"] == 0.5d);
             Assert.IsTrue(output["matterEnergy"] == 0.5d);
         }
@@ -46,13 +46,13 @@ namespace Living_Systems_Class_Library_Test
             template.outputs = new Dictionary<string, double>();
             template.outputs.Add("matterEnergy", 0.5d);
             template.type = ProcessType.REPRODUCER;
-            ReproducerProcessExecuteArgs executeArgs = new ReproducerProcessExecuteArgs();
-            executeArgs.inputPile = input;
-            executeArgs.outputPile = output;
+            dynamic executeArgs = new BasicProcessExecuteArgs();
+            executeArgs.InputPile = input;
+            executeArgs.OutputPile = output;
             system.AddProcess("reproducerProcess", template);
             Assert.IsTrue(system.SetExecuteArgs("reproducerProcess", executeArgs));
             Assert.IsFalse(system.ExecuteAllProcesses());
-            Assert.IsNull(executeArgs.system);
+            Assert.IsNull(executeArgs.System);
             Assert.IsTrue(input["matterEnergy"] == 0.5d);
             Assert.ThrowsException<KeyNotFoundException>(() => output["matterEnergy"]);
         }
@@ -71,18 +71,18 @@ namespace Living_Systems_Class_Library_Test
             template.type = ProcessType.REPRODUCER;
             template.processesToAdd = new Dictionary<string, IProcessTemplate>();
             template.processesToAdd.Add("reproducerProcess", template);
-            ReproducerProcessExecuteArgs executeArgs = new ReproducerProcessExecuteArgs();
-            executeArgs.inputPile = input;
-            executeArgs.outputPile = output;
+            dynamic executeArgs = new BasicProcessExecuteArgs();
+            executeArgs.InputPile = input;
+            executeArgs.OutputPile = output;
             system.AddProcess("reproducerProcess", template);
             Assert.IsTrue(system.SetExecuteArgs("reproducerProcess", executeArgs));
             Assert.IsTrue(system.ExecuteAllProcesses());
-            LivingSystem secondSystem = executeArgs.system;
+            LivingSystem secondSystem = executeArgs.System;
             Assert.IsNotNull(secondSystem);
-            executeArgs.system = null;
+            executeArgs.System = null;
             Assert.IsTrue(secondSystem.SetExecuteArgs("reproducerProcess", executeArgs));
             Assert.IsTrue(secondSystem.ExecuteAllProcesses());
-            LivingSystem thirdSystem = executeArgs.system;
+            LivingSystem thirdSystem = executeArgs.System;
             Assert.IsNotNull(thirdSystem);
         }
     }

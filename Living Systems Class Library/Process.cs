@@ -1,16 +1,36 @@
 ﻿using Living_Systems_Class_Library.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Living_Systems_Class_Library
 {
-    public class BasicProcessExecuteArgs : IProcessExecuteArgs
+    public class BasicProcessExecuteArgs : DynamicObject, IProcessExecuteArgs
     {
-        public MatterEnergyPile inputPile;
-        public MatterEnergyPile outputPile;
+        public IDictionary<string, object> properties = new Dictionary<string, object>();
+
+        public override bool TryGetMember(GetMemberBinder binder, out object result)
+        {
+            if (properties.ContainsKey(binder.Name))
+            {
+                result = properties[binder.Name];
+                return true;
+            }
+            else
+            {
+                result = null;
+                return true;
+            }
+        }
+
+        public override bool TrySetMember(SetMemberBinder binder, object value)
+        {
+            properties[binder.Name] = value;
+            return true;
+        }
     }
 
     public class BasicProcessTemplate : IProcessTemplate
@@ -23,7 +43,7 @@ namespace Living_Systems_Class_Library
     class Process : IProcess
     {
         LivingSystem system;
-        public IProcessExecuteArgs ExecuteArgs { get; set; }
+        public dynamic ExecuteArgs { get; set; }
         public IProcessTemplate ProcessTemplate { get; set; } 
 
         public Process(LivingSystem system)
@@ -32,17 +52,17 @@ namespace Living_Systems_Class_Library
         }
         public bool Execute()
         {
-            BasicProcessExecuteArgs basicArgs = ExecuteArgs as BasicProcessExecuteArgs;
+            dynamic basicArgs = ExecuteArgs as BasicProcessExecuteArgs;
             BasicProcessTemplate processTemplate = ProcessTemplate as BasicProcessTemplate;
-            if ((basicArgs.inputPile == null && processTemplate.inputs.Count > 0) || !basicArgs.inputPile.RemoveBulk(processTemplate.inputs))
+            if ((basicArgs.InputPile == null && processTemplate.inputs.Count > 0) || !basicArgs.InputPile.RemoveBulk(processTemplate.inputs))
             {
                 return false;
             }
-            if (basicArgs.outputPile == null && processTemplate.outputs.Count == 0)
+            if (basicArgs.OutputPile == null && processTemplate.outputs.Count == 0)
             {
                 return false;
             }
-            basicArgs.outputPile.AddBulk(processTemplate.outputs);
+            basicArgs.OutputPile.AddBulk(processTemplate.outputs);
             return true;
         }
 
