@@ -46,10 +46,10 @@ namespace Living_Systems_Class_Library.Components
             return result;
         }
 
-        public ISet<ProcessType> GetComponents()
+        public ISet<ComponentType> GetComponents()
         {
-            ISet<ProcessType> innerSet = _inner.GetComponents();
-            innerSet.Add(ProcessType.REPRODUCER);
+            ISet<ComponentType> innerSet = _inner.GetComponents();
+            innerSet.Add(ComponentType.REPRODUCER);
             return innerSet;
         }
     }

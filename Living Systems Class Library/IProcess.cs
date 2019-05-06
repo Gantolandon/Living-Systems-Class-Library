@@ -10,13 +10,11 @@ namespace Living_Systems_Class_Library
 {
     public interface IProcessExecuteArgs
     {
-        bool TryGetMember(GetMemberBinder binder, out object result);
-        bool TrySetMember(SetMemberBinder binder, object value);
+        ISet<ComponentType> ComponentTypes { get; set; }
     }
 
     public interface IProcessTemplate
     {
-
     }
 
     public interface IProcess
@@ -24,6 +22,6 @@ namespace Living_Systems_Class_Library
         bool Execute();
         dynamic ExecuteArgs { get; set; }
         IProcessTemplate ProcessTemplate { get; set; }
-        ISet<ProcessType> GetComponents();
+        ISet<ComponentType> GetComponents();
     }
 }

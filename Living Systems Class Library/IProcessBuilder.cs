@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Living_Systems_Class_Library
 {
-    public enum ProcessType
+    public enum ComponentType
     {
         REPRODUCER,
     }

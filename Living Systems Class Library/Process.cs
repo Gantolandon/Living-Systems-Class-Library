@@ -10,10 +10,16 @@ namespace Living_Systems_Class_Library
 {
     public class BasicProcessExecuteArgs : DynamicObject, IProcessExecuteArgs
     {
-        public IDictionary<string, object> properties = new Dictionary<string, object>();
+        private IDictionary<string, object> properties = new Dictionary<string, object>();
+
+        public ISet<ComponentType> ComponentTypes { get; set; }
 
         public override bool TryGetMember(GetMemberBinder binder, out object result)
         {
+            if (!IsMemberAllowed(binder.Name)) {
+                result = null;
+                return false;
+            }
             if (properties.ContainsKey(binder.Name))
             {
                 result = properties[binder.Name];
@@ -28,14 +34,36 @@ namespace Living_Systems_Class_Library
 
         public override bool TrySetMember(SetMemberBinder binder, object value)
         {
+            if (!IsMemberAllowed(binder.Name, value != null ? value.GetType() : null))
+            {
+                return false;
+            }
             properties[binder.Name] = value;
             return true;
+        }
+
+        private bool IsMemberAllowed(string name, Type type = null)
+        {
+            if (name == "InputPile" && (type == null || type == typeof(MatterEnergyPile)))
+            {
+                return true;
+            }
+            if (name == "OutputPile" && (type == null || type == typeof(MatterEnergyPile)))
+            {
+                return true;
+            }
+            if (ComponentTypes != null && ComponentTypes.Contains(ComponentType.REPRODUCER) 
+                && name == "System" && (type == null || type == typeof(LivingSystem)))
+            {
+                return true;
+            }
+            return false;
         }
     }
 
     public class BasicProcessTemplate : IProcessTemplate
     {
-        public ProcessType type;
+        public ComponentType type;
         public IDictionary<string, double> inputs;
         public IDictionary<string, double> outputs;
     }
@@ -66,9 +94,9 @@ namespace Living_Systems_Class_Library
             return true;
         }
 
-        public ISet<ProcessType> GetComponents()
+        public ISet<ComponentType> GetComponents()
         {
-            return new SortedSet<ProcessType>();
+            return new SortedSet<ComponentType>();
         }
     }
 }

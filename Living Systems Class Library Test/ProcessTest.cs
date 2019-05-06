@@ -21,7 +21,7 @@ namespace Living_Systems_Class_Library_Test
             template.inputs.Add("matterEnergy", 1.0d);
             template.outputs = new Dictionary<string, double>();
             template.outputs.Add("matterEnergy", 0.5d);
-            template.type = ProcessType.REPRODUCER;
+            template.type = ComponentType.REPRODUCER;
             dynamic executeArgs = new BasicProcessExecuteArgs();
             executeArgs.InputPile = input;
             executeArgs.OutputPile = output;
@@ -45,7 +45,7 @@ namespace Living_Systems_Class_Library_Test
             template.inputs.Add("matterEnergy", 1.0d);
             template.outputs = new Dictionary<string, double>();
             template.outputs.Add("matterEnergy", 0.5d);
-            template.type = ProcessType.REPRODUCER;
+            template.type = ComponentType.REPRODUCER;
             dynamic executeArgs = new BasicProcessExecuteArgs();
             executeArgs.InputPile = input;
             executeArgs.OutputPile = output;
@@ -68,7 +68,7 @@ namespace Living_Systems_Class_Library_Test
             template.inputs.Add("matterEnergy", 1.0d);
             template.outputs = new Dictionary<string, double>();
             template.outputs.Add("matterEnergy", 0.5d);
-            template.type = ProcessType.REPRODUCER;
+            template.type = ComponentType.REPRODUCER;
             template.processesToAdd = new Dictionary<string, IProcessTemplate>();
             template.processesToAdd.Add("reproducerProcess", template);
             dynamic executeArgs = new BasicProcessExecuteArgs();

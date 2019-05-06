@@ -29,6 +29,7 @@ namespace Living_Systems_Class_Library
                 return false;
             }
             this.processes[name].ExecuteArgs = args;
+            args.ComponentTypes = this.processes[name].GetComponents();
             return true;
         }
 

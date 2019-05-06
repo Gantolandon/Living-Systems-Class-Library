@@ -36,7 +36,7 @@ namespace Living_Systems_Class_Library
             }
             switch (basicTemplate.type)
             {
-                case ProcessType.REPRODUCER:
+                case ComponentType.REPRODUCER:
                     IProcess reproducer = new ProcessReproducerDecorator(mainProcess);
                     return reproducer;
                 default:
