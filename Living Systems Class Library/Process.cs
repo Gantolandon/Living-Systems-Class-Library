@@ -61,11 +61,58 @@ namespace Living_Systems_Class_Library
         }
     }
 
-    public class BasicProcessTemplate : IProcessTemplate
+    public class BasicProcessTemplate : DynamicObject, IProcessTemplate
     {
-        public ComponentType type;
-        public IDictionary<string, double> inputs;
-        public IDictionary<string, double> outputs;
+        private IDictionary<string, object> properties = new Dictionary<string, object>();
+
+        public ISet<ComponentType> ComponentTypes { get; set; }
+
+        public override bool TryGetMember(GetMemberBinder binder, out object result)
+        {
+            if (!IsMemberAllowed(binder.Name))
+            {
+                result = null;
+                return false;
+            }
+            if (properties.ContainsKey(binder.Name))
+            {
+                result = properties[binder.Name];
+                return true;
+            }
+            else
+            {
+                result = null;
+                return true;
+            }
+        }
+
+        public override bool TrySetMember(SetMemberBinder binder, object value)
+        {
+            if (!IsMemberAllowed(binder.Name, value != null ? value.GetType() : null))
+            {
+                return false;
+            }
+            properties[binder.Name] = value;
+            return true;
+        }
+
+        private bool IsMemberAllowed(string name, Type type = null)
+        {
+            if (name == "Inputs" && (type == null || type == typeof(Dictionary<string, double>)))
+            {
+                return true;
+            }
+            if (name == "Outputs" && (type == null || type == typeof(Dictionary<string, double>)))
+            {
+                return true;
+            }
+            if (ComponentTypes != null && ComponentTypes.Contains(ComponentType.REPRODUCER)
+                && name == "ProcessesToAdd" && (type == null || type == typeof(Dictionary<string, IProcessTemplate>)))
+            {
+                return true;
+            }
+            return false;
+        }
     }
 
     class Process : IProcess
@@ -81,16 +128,16 @@ namespace Living_Systems_Class_Library
         public bool Execute()
         {
             dynamic basicArgs = ExecuteArgs as BasicProcessExecuteArgs;
-            BasicProcessTemplate processTemplate = ProcessTemplate as BasicProcessTemplate;
-            if ((basicArgs.InputPile == null && processTemplate.inputs.Count > 0) || !basicArgs.InputPile.RemoveBulk(processTemplate.inputs))
+            dynamic processTemplate = ProcessTemplate as BasicProcessTemplate;
+            if ((basicArgs.InputPile == null && processTemplate.Inputs.Count > 0) || !basicArgs.InputPile.RemoveBulk(processTemplate.Inputs))
             {
                 return false;
             }
-            if (basicArgs.OutputPile == null && processTemplate.outputs.Count == 0)
+            if (basicArgs.OutputPile == null && processTemplate.Outputs.Count == 0)
             {
                 return false;
             }
-            basicArgs.OutputPile.AddBulk(processTemplate.outputs);
+            basicArgs.OutputPile.AddBulk(processTemplate.Outputs);
             return true;
         }
 

@@ -9,12 +9,6 @@ using System.Threading.Tasks;
 namespace Living_Systems_Class_Library.Components
 {
     //TODO: make templates compliant with Decorator pattern too
-    
-
-    public class ReproducerProcessTemplate : BasicProcessTemplate
-    {
-        public Dictionary<string, IProcessTemplate> processesToAdd;
-    }
 
     class ProcessReproducerDecorator: IProcess
     {
@@ -33,11 +27,11 @@ namespace Living_Systems_Class_Library.Components
             bool result = _inner.Execute();
             if (result)
             {
-                ReproducerProcessTemplate reproducerTemplate = ProcessTemplate as ReproducerProcessTemplate;
+                dynamic reproducerTemplate = ProcessTemplate;
                 specificArgs.System = new LivingSystem();
-                if (reproducerTemplate != null && reproducerTemplate.processesToAdd != null)
+                if (reproducerTemplate != null && reproducerTemplate.ProcessesToAdd != null)
                 {
-                    foreach (KeyValuePair<string, IProcessTemplate> process in reproducerTemplate.processesToAdd)
+                    foreach (KeyValuePair<string, IProcessTemplate> process in reproducerTemplate.ProcessesToAdd)
                     {
                         specificArgs.System.AddProcess(process.Key, process.Value);
                     }

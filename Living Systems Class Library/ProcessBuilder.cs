@@ -29,18 +29,14 @@ namespace Living_Systems_Class_Library
         {
             IProcess mainProcess = new Process(system);
             mainProcess.ProcessTemplate = template;
-            BasicProcessTemplate basicTemplate = template as BasicProcessTemplate;
+            dynamic basicTemplate = template as BasicProcessTemplate;
             if (basicTemplate == null)
             {
                 return null;
             }
-            switch (basicTemplate.type)
+            if (basicTemplate.ComponentTypes.Contains(ComponentType.REPRODUCER))
             {
-                case ComponentType.REPRODUCER:
-                    IProcess reproducer = new ProcessReproducerDecorator(mainProcess);
-                    return reproducer;
-                default:
-                    break;
+                mainProcess = new ProcessReproducerDecorator(mainProcess);
             }
             return mainProcess;
         }
