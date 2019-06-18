@@ -14,7 +14,7 @@ namespace Living_Systems_Class_Library.Components
     {
         private IProcess _inner;
         public dynamic ExecuteArgs { get => this._inner.ExecuteArgs; set => this._inner.ExecuteArgs = value; }
-        public IProcessTemplate ProcessTemplate { get => this._inner.ProcessTemplate; set => this._inner.ProcessTemplate = value; }
+        public dynamic ProcessTemplate { get => this._inner.ProcessTemplate; set => this._inner.ProcessTemplate = value; }
 
         public ProcessReproducerDecorator(IProcess inner)
         {

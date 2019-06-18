@@ -7,7 +7,7 @@ using Living_Systems_Class_Library.Components;
 namespace Living_Systems_Class_Library_Test
 {
     [TestClass]
-    public class ProcessTest
+    public class TestReproducerProcess
     {
         [TestMethod]
         public void TestReproducerProcessCreation()

@@ -9,6 +9,7 @@ namespace Living_Systems_Class_Library
     public enum ComponentType
     {
         REPRODUCER,
+        DECIDER,
     }
 
     public interface IProcessBuilder

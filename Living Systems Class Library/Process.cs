@@ -111,6 +111,11 @@ namespace Living_Systems_Class_Library
             {
                 return true;
             }
+            if (ComponentTypes != null && ComponentTypes.Contains(ComponentType.DECIDER)
+                && name == "InitialValueRules" && (type == null || type == typeof(Dictionary<string, object>)))
+            {
+                return true;
+            }
             return false;
         }
     }
@@ -119,7 +124,7 @@ namespace Living_Systems_Class_Library
     {
         LivingSystem system;
         public dynamic ExecuteArgs { get; set; }
-        public IProcessTemplate ProcessTemplate { get; set; } 
+        public dynamic ProcessTemplate { get; set; }
 
         public Process(LivingSystem system)
         {

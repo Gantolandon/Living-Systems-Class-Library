@@ -4,6 +4,10 @@ using System.Collections.Generic;
 
 namespace Living_Systems_Class_Library.Helpers
 {
+    /// <summary>
+    /// An special version of a dictionary created to store amounts of particular matter and energy in a concrete place.
+    /// It's made to be usable as a normal dictionary.
+    /// </summary>
     public class MatterEnergyPile : IDictionary<string, double>
     {
         Dictionary<string, double> internalPile;
@@ -91,11 +95,22 @@ namespace Living_Systems_Class_Library.Helpers
             return InternalPile.GetEnumerator();
         }
 
+        /// <summary>
+        /// Checks if the pile has a particular amount of a particular matter energy
+        /// </summary>
+        /// <param name="amount">Amount of a particular matter energy (a pair: string and double)</param>
+        /// <returns>true or false</returns>
         public bool HasAmount(KeyValuePair<string, double> amount)
         {
             return this.HasAmount(amount.Key, amount.Value);
         }
 
+        /// <summary>
+        /// Checks if the pile has a particular amount of a particular matter energy
+        /// </summary>
+        /// <param name="key">matter-energy key</param>
+        /// <param name="value">matter-energy amount</param>
+        /// <returns>true or false</returns>
         public bool HasAmount(string key, double value)
         {
             if (value == 0.0d)
@@ -105,6 +120,13 @@ namespace Living_Systems_Class_Library.Helpers
             return this.ContainsKey(key) && internalPile[key] >= value;
         }
 
+        /// <summary>
+        /// Tries to remove a particular amount of matter and energy from the pile. If there is not enough of matter-energy, it does
+        /// nothing and returns false.
+        /// </summary>
+        /// <param name="key">matter-energy key</param>
+        /// <param name="value">matter-energy amount</param>
+        /// <returns>true if succeeded, false if not</returns>
         public bool RemoveAmount(string key, double value)
         {
             if (this.HasAmount(key, value))
@@ -118,12 +140,22 @@ namespace Living_Systems_Class_Library.Helpers
             }
             return false;
         }
-
+        /// <summary>
+        /// Tries to remove a particular amount of matter and energy from the pile. If there is not enough of matter-energy, it does
+        /// nothing and returns false.
+        /// </summary>
+        /// <param name="amount">Amount of a particular matter energy (a pair: string and double)</param>
+        /// <returns>true if succeeded, false if not</returns>
         public bool RemoveAmount(KeyValuePair<string, double> amount)
         {
             return this.RemoveAmount(amount.Key, amount.Value);
         }
 
+        /// <summary>
+        /// Adds a particular amount of matter and energy to the pile.
+        /// </summary>
+        /// <param name="key">matter-energy key</param>
+        /// <param name="value">matter-energy amount</param>
         public void AddAmount(string key, double value)
         {
             if (!this.HasAmount(key, value))
@@ -133,11 +165,20 @@ namespace Living_Systems_Class_Library.Helpers
             this[key] += value;
         }
 
+        /// <summary>
+        /// Adds a particular amount of matter and energy to the pile.
+        /// </summary>
+        /// <param name="amount">Amount of a particular matter energy (a pair: string and double)</param>
         public void AddAmount(KeyValuePair<string, double> amount)
         {
             this.AddAmount(amount.Key, amount.Value);
         }
 
+        /// <summary>
+        /// Checks if the pile has different amounts of many types of matter and energy
+        /// </summary>
+        /// <param name="pile">A dictionary containing pairs of matter-energy keys and amounts</param>
+        /// <returns>true if HasAmount is true for every single amount</returns>
         public bool HasBulk(IDictionary<string, double> pile)
         {
             foreach (KeyValuePair<string, double> amount in pile)
@@ -150,6 +191,11 @@ namespace Living_Systems_Class_Library.Helpers
             return true;
         }
 
+        /// <summary>
+        /// Tries to remove different amounts of many types of matter and energy. It fails if it can't remove even one of them.
+        /// </summary>
+        /// <param name="pile">A dictionary containing pairs of matter-energy keys and amounts</param>
+        /// <returns>true if HasAmount and RemoveAmount is true for every single amount</returns>
         public bool RemoveBulk(IDictionary<string, double> pile)
         {
             foreach (KeyValuePair<string, double> amount in pile)
@@ -171,6 +217,10 @@ namespace Living_Systems_Class_Library.Helpers
             return true;
         }
 
+        /// <summary>
+        /// Adds different amounts of many types of matter and energy to the pile.
+        /// </summary>
+        /// <param name="pile">A dictionary containing pairs of matter-energy keys and amounts</param>
         public void AddBulk(IDictionary<string, double> pile)
         {
             foreach (KeyValuePair<string, double> amount in pile)
