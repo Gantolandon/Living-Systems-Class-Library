@@ -20,8 +20,8 @@ namespace Living_Systems_Class_Library
     public interface IProcess
     {
         bool Execute();
-        dynamic ExecuteArgs { get; set; }
-        dynamic ProcessTemplate { get; set; }
+        dynamic? ExecuteArgs { get; set; }
+        dynamic? ProcessTemplate { get; set; }
         ISet<ComponentType> GetComponents();
     }
 }

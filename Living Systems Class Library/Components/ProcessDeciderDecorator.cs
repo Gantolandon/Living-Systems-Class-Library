@@ -1,17 +1,12 @@
 ﻿using Living_Systems_Class_Library.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Living_Systems_Class_Library.Components
 {
     class ProcessDeciderDecorator : IProcess
     {
         private IProcess _inner;
-        public dynamic ExecuteArgs { get => this._inner.ExecuteArgs; set => this._inner.ExecuteArgs = value; }
-        public dynamic ProcessTemplate { get => this._inner.ProcessTemplate; set => this._inner.ProcessTemplate = value; }
+        public dynamic? ExecuteArgs { get => this._inner.ExecuteArgs; set => this._inner.ExecuteArgs = value; }
+        public dynamic? ProcessTemplate { get => this._inner.ProcessTemplate; set => this._inner.ProcessTemplate = value; }
 
         private readonly IDictionary<string, Value> values;
 
@@ -19,8 +14,9 @@ namespace Living_Systems_Class_Library.Components
         {
             this._inner = inner;
             this.values = new Dictionary<string, Value>();
-            IDictionary<string, double> valueRules = this.ProcessTemplate.InitialValueRules;
-            this.PopulateValues(valueRules);
+            if (ProcessTemplate is not null) {
+                this.PopulateValues(ProcessTemplate.InitialValueRules);
+            }
         }
 
         private void PopulateValues(IDictionary<string, double> initialValueRules)
