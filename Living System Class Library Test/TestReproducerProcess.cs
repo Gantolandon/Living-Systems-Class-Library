@@ -1,8 +1,5 @@
-﻿using System.Collections.Generic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Living_Systems_Class_Library;
+﻿using Living_Systems_Class_Library;
 using Living_Systems_Class_Library.Helpers;
-using Living_Systems_Class_Library.Components;
 
 namespace Living_Systems_Class_Library_Test
 {

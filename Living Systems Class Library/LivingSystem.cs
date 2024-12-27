@@ -12,7 +12,7 @@ namespace Living_Systems_Class_Library
 
         public LivingSystem()
         {
-            this.processes = new Dictionary<string, IProcess>();
+            this.processes = [];
         }
 
         public void AddProcess(string name, IProcessTemplate template)

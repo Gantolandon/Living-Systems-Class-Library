@@ -13,7 +13,7 @@ namespace Living_Systems_Class_Library.Components
         public dynamic ExecuteArgs { get => this._inner.ExecuteArgs; set => this._inner.ExecuteArgs = value; }
         public dynamic ProcessTemplate { get => this._inner.ProcessTemplate; set => this._inner.ProcessTemplate = value; }
 
-        private IDictionary<string, Value> values;
+        private readonly IDictionary<string, Value> values;
 
         public ProcessDeciderDecorator(IProcess inner)
         {
@@ -31,9 +31,9 @@ namespace Living_Systems_Class_Library.Components
             }
         }
 
-        public Value SelectValueToResolve()
+        public Value? SelectValueToResolve()
         {
-            Value selectedValue = null;
+            Value? selectedValue = null;
             double previousEvaluateWithPriority = 0.0d;
             foreach (KeyValuePair<string, Value> value in values)
             {
@@ -49,7 +49,7 @@ namespace Living_Systems_Class_Library.Components
 
         public bool Execute()
         {
-            Value currentValue = null;
+            Value? currentValue = null;
             currentValue = SelectValueToResolve();
             return _inner.Execute();
         }

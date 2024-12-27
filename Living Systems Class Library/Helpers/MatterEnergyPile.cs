@@ -10,9 +10,9 @@ namespace Living_Systems_Class_Library.Helpers
     /// </summary>
     public class MatterEnergyPile : IDictionary<string, double>
     {
-        Dictionary<string, double> internalPile;
+        Dictionary<string, double> internalPile = new Dictionary<string, double>();
 
-        public IDictionary<string, double> InternalPile { get => internalPile; set => internalPile = new Dictionary<string, double> (value); }
+        public IDictionary<string, double> InternalPile { get => internalPile;}
 
         public ICollection<string> Keys => InternalPile.Keys;
 
@@ -26,17 +26,10 @@ namespace Living_Systems_Class_Library.Helpers
 
         public MatterEnergyPile()
         {
-            this.InternalPile = new Dictionary<string, double>();
-        }
-
-        public MatterEnergyPile(Dictionary<string, double> pile)
-        {
-            this.InternalPile = pile;
         }
 
         public MatterEnergyPile(string key, double amount)
         {
-            this.InternalPile = new Dictionary<string, double>();
             this.InternalPile.Add(key, amount);
         }
 

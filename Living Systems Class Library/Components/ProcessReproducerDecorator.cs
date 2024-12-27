@@ -29,9 +29,9 @@ namespace Living_Systems_Class_Library.Components
             {
                 dynamic reproducerTemplate = ProcessTemplate;
                 specificArgs.System = new LivingSystem();
-                if (reproducerTemplate != null && reproducerTemplate.ProcessesToAdd != null)
+                if (reproducerTemplate != null && reproducerTemplate!.ProcessesToAdd != null)
                 {
-                    foreach (KeyValuePair<string, IProcessTemplate> process in reproducerTemplate.ProcessesToAdd)
+                    foreach (KeyValuePair<string, IProcessTemplate> process in reproducerTemplate!.ProcessesToAdd)
                     {
                         specificArgs.System.AddProcess(process.Key, process.Value);
                     }
